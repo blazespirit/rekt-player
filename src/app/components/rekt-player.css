@@ -1,0 +1,8 @@
+.rekt-player {
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
+    background-image: url('../../assets/img/wallpaper.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
