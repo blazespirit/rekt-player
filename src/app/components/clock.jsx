@@ -54,7 +54,7 @@ export default class App extends React.Component {
     render() {
         return (
             <div id="clock" className={container}>
-                <span>{this.state.hour} : {this.state.minute}</span>
+                <span>{this.state.hour}:{this.state.minute}</span>
                 <span className={smallText}>&nbsp; {this.state.ampm}</span>
             </div>
         );
@@ -74,5 +74,5 @@ const container = css`
 `;
 
 const smallText = css`
-    font-size: 4.55vh;
+    font-size: 4.5vh;
 `;

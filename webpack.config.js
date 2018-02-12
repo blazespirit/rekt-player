@@ -11,7 +11,10 @@ module.exports = {
 		rules: [
 			{
 				test: /\.(js|jsx)/,
-				use: ['babel-loader', 'linaria/loader'],
+				use: [
+					{ loader: 'babel-loader' },
+					{ loader: 'linaria/loader' }
+				],
 				exclude: /node_modules/
 			},
 			{
