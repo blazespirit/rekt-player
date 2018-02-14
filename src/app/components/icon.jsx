@@ -7,15 +7,15 @@ export default class App extends React.Component {
     }
 
     render() {
-        let cssClass;
+        let iconClass;
 
         switch(this.props.type) {
-            case 'movie': cssClass = movie; break;
-            case 'music': cssClass = music; break;
-            case 'youtube': cssClass = youtube; break;
+            case 'movie': iconClass = movie; break;
+            case 'music': iconClass = music; break;
+            case 'youtube': iconClass = youtube; break;
         }
         return (
-            <div className={names(container, cssClass)}></div>
+            <div className={names(container, iconClass)}></div>
         );
     }
 }
@@ -24,7 +24,7 @@ export default class App extends React.Component {
 const container = css`
     width: 100%;
     height: 100%;
-    background-size: cover;
+    background-size: 85%;
     background-position: center;
     background-repeat: no-repeat;
 `;

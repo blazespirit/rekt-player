@@ -3,17 +3,61 @@ import { css } from 'linaria';
 import Icon    from './icon.jsx';
 
 export default class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            highlightIndex: 0
+        };
+    }
+
+    componentDidMount() {
+        setInterval(() => {
+            this.setState((prevState, props) => {
+                if (prevState.highlightIndex + 1 > 2) {
+                    return {highlightIndex: 0};
+                }
+                return {highlightIndex: prevState.highlightIndex + 1};
+            });
+        }, 2000);
+    }
+
     render() {
+        let labelStyle = {
+            opacity: 1,
+            transform: 'translateY(0)'
+        };
         return (
             <div className={container}>
-                <div className={iconWrapper}>
-                    <Icon type="movie" />
-                </div>
-                <div className={iconWrapper}>
-                    <Icon type="music" />
-                </div>
-                <div className={iconWrapper}>
-                    <Icon type="youtube" />
+                <div className={menu}>
+                    <div className={flexRow}>
+                        <div className={icon}>
+                            <Icon type="movie" />
+                        </div>
+                        <div className={spacer}></div>
+                        <div className={icon}>
+                            <Icon type="music" />
+                        </div>
+                        <div className={spacer}></div>
+                        <div className={icon}>
+                            <Icon type="youtube" />
+                        </div>
+                    </div>
+                    <div className={highlightRow}>
+                        <div className={highlight} style={{left: (this.state.highlightIndex * 25) + 'vw'}}></div>
+                    </div>
+                    <div className={flexRow}>
+                        <div className={label}
+                            style={this.state.highlightIndex === 0 ? labelStyle : {}}>Movie
+                        </div>
+                        <div className={spacer}></div>
+                        <div className={label}
+                            style={this.state.highlightIndex === 1 ? labelStyle : {}}>Music
+                        </div>
+                        <div className={spacer}></div>
+                        <div className={label}
+                            style={this.state.highlightIndex === 2 ? labelStyle : {}}>Youtube
+                        </div>
+                    </div>
                 </div>
             </div>
         );
@@ -24,13 +68,47 @@ export default class App extends React.Component {
 const container = css`
     width:100vw;
     height: 80vh;
-    display: flex;
-    justify-content: space-around;
-    box-sizing: border-box;
-    padding-top: 20vh;
 `;
 
-const iconWrapper = css`
-    width: 15vh;
-    height: 15vh;
+const menu = css`
+    width: 60vw;
+    margin-top: 20vh;
+    margin-left: 20vw;
+`;
+
+const flexRow = css`
+    display: flex;
+`;
+
+const icon = css`
+    width: 10vw;
+    height: 10vw;
+`;
+
+const spacer = css`
+    width: 15vw;
+`;
+
+const highlightRow = css`
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+`;
+
+const highlight = css`
+    width: 10vw;
+    height: 0.7vh;
+    position: relative;
+    background-color: #4FC3F7;
+    transition: left 0.5s;
+`;
+
+const label = css`
+    width: 10vw;
+    font-size: 5vh;
+    font-weight: 300;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(-45%);
+    transition: opacity 0.5s ease-out 0.2s,
+                transform 0.3s ease-out 0.2s;
 `;

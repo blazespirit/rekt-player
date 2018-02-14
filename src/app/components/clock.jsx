@@ -63,8 +63,6 @@ export default class App extends React.Component {
 
 // styling
 const container = css`
-    display: flex;
-    justify-content: flex-end;
     align-items: baseline;
     font-family: Roboto;
     font-weight: 300;
