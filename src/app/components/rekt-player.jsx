@@ -1,7 +1,10 @@
-import React    from 'react';
-import Header   from './header.jsx';
-import MainMenu from './main-menu.jsx';
-import { css }  from 'linaria';
+import React             from 'react';
+import Header            from './header.jsx';
+import MainMenu          from './main-menu.jsx';
+import MusicPage         from './music-page.jsx';
+import MoviePage         from './movie-page.jsx';
+import { Switch, Route } from 'react-router-dom';
+import { css }           from 'linaria';
 
 export default class App extends React.Component {
     render() {
@@ -11,7 +14,11 @@ export default class App extends React.Component {
                 <div className={bgShade}></div>
                 <div className={content}>
                     <Header />
-                    <MainMenu />
+                    <Switch>
+                        <Route exact path="/" component={MainMenu} />
+                        <Route exact path="/music" component={MusicPage} />
+                        <Route exact path="/movie" component={MoviePage} />
+                    </Switch>
                 </div>
             </div>
         );

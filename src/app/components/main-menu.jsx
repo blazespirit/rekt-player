@@ -22,6 +22,11 @@ export default class App extends React.Component {
     }
 
     render() {
+        let iconFocus = {
+            opacity: 1,
+            padding: 0
+        };
+
         let labelStyle = {
             opacity: 1,
             transform: 'translateY(0)'
@@ -30,15 +35,18 @@ export default class App extends React.Component {
             <div className={container}>
                 <div className={menu}>
                     <div className={flexRow}>
-                        <div className={icon}>
+                        <div className={icon}
+                            style={this.state.highlightIndex === 0 ? iconFocus : {}}>
                             <Icon type="movie" />
                         </div>
                         <div className={spacer}></div>
-                        <div className={icon}>
+                        <div className={icon}
+                            style={this.state.highlightIndex === 1 ? iconFocus : {}}>
                             <Icon type="music" />
                         </div>
                         <div className={spacer}></div>
-                        <div className={icon}>
+                        <div className={icon}
+                            style={this.state.highlightIndex === 2 ? iconFocus : {}}>
                             <Icon type="youtube" />
                         </div>
                     </div>
@@ -55,7 +63,7 @@ export default class App extends React.Component {
                         </div>
                         <div className={spacer}></div>
                         <div className={label}
-                            style={this.state.highlightIndex === 2 ? labelStyle : {}}>Youtube
+                            style={this.state.highlightIndex === 2 ? labelStyle : {}}>YouTube
                         </div>
                     </div>
                 </div>
@@ -83,6 +91,11 @@ const flexRow = css`
 const icon = css`
     width: 10vw;
     height: 10vw;
+    padding: 2vw;
+    box-sizing: border-box;
+    opacity: 0.5;
+    transition: opacity 0.5s ease-out,
+                padding 0.2s ease-out 0.2s;
 `;
 
 const spacer = css`
