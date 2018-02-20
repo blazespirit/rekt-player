@@ -55,7 +55,7 @@ export default class App extends React.Component {
 // styling
 const container = css`
     padding-left: 20vw;
-    border-top: 1px solid white;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
 `;
 
 const movieItem = css`

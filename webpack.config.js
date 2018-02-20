@@ -5,7 +5,7 @@ module.exports = {
     entry: './src/app/rekt-player.js',
     output: {
 		path: __dirname + '/dist',
-        filename: './rekt-player.js'
+        filename: './app/rekt-player.js'
     },
 	module: {
 		rules: [
@@ -46,9 +46,10 @@ module.exports = {
 		// copy to 'dist' folder.
 		new CopyWebpackPlugin([
             { from: './src/main.js', to: './' },
-			{ from: './src/index.html', to: './' },
-			{ from: './src/style.css', to: './' },
+			{ from: './src/app/index.html', to: './app' },
+			{ from: './src/app/style.css', to: './app' },
 			{ from: './src/assets', to: './assets' },
+			{ from: './src/remoteCtrlServer', to: './remoteCtrlServer' },
 		])
 	],
 	watch: true // configure webpack to watch for changes.

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <title>v-player-remote</title>
+</head>
+<body>
+    <div id="main">
+        <div id="shutdown"></div>
+        <div id="gesture"></div>
+        <div id="popup">
+            <div id="dialog" class="dialog">
+                <div class="text">Shutdown system ?</div>
+                <div class="option">
+                    <div id="confirm" class="confirm">Yes</div>
+                    <div id="cancel" class="cancel">No</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="hammer.min.js"></script>
+<script src="socket.io.min.js"></script>
+<script src="index.js"></script>
+</html>
