@@ -1,16 +1,18 @@
-const express    = require('express');
-const bodyParser = require('body-parser');
-const path       = require('path');
-const server     = express();
-const http       = require('http').Server(server);
-const io         = require('socket.io')(http);
+const express     = require('express');
+const bodyParser  = require('body-parser');
+const path        = require('path');
+const server      = express();
+const http        = require('http').Server(server);
+const io          = require('socket.io')(http);
+const ipcRenderer = require('electron').ipcRenderer;
 
 // setup socket.io
-io.on('connection', function (socket) {
+io.on('connection', function(socket) {
     console.log('a remote connected!');
 
-    socket.on('action', function (action) {
-        console.log(`remote fire ${action} action.`);
+    socket.on('action', function(gesture) {
+        console.log(`remote fire ${gesture} action.`);
+        ipcRenderer.send('remoteGesture', gesture);
     });
 
     socket.on('disconnect', function () {

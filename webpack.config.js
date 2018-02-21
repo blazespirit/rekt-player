@@ -1,12 +1,42 @@
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin  = require('copy-webpack-plugin');
 
-module.exports = {
-    entry: './src/app/rekt-player.js',
+const main = {
+	target: 'electron-main',
+    entry: './src/main/main.js',
     output: {
 		path: __dirname + '/dist',
-        filename: './app/rekt-player.js'
-    },
+        filename: './main/main.js'
+	},
+	node: {
+		__dirname: false,
+		__filename: false
+	},
+	module: {
+		rules: [
+			{
+				test: /\.(js|jsx)/,
+				use: [
+					{ loader: 'babel-loader' }
+				],
+				exclude: /node_modules/
+			}
+		]
+	},
+	plugins: [
+		// delete 'dist' folder on re-build.
+		new CleanWebpackPlugin(['dist/']),
+	],
+	watch: true // configure webpack to watch for changes.
+}
+
+const rektPlayer = {
+	target: 'electron-renderer',
+    entry: './src/renderer/app/rekt-player.js',
+    output: {
+		path: __dirname + '/dist',
+        filename: './renderer/app/rekt-player.js'
+	},
 	module: {
 		rules: [
 			{
@@ -45,12 +75,16 @@ module.exports = {
 		
 		// copy to 'dist' folder.
 		new CopyWebpackPlugin([
-            { from: './src/main.js', to: './' },
-			{ from: './src/app/index.html', to: './app' },
-			{ from: './src/app/style.css', to: './app' },
-			{ from: './src/assets', to: './assets' },
-			{ from: './src/remoteCtrlServer', to: './remoteCtrlServer' },
+			{ from: './src/renderer/app/index.html', to: './renderer/app' },
+			{ from: './src/renderer/app/style.css', to: './renderer/app' },
+			{ from: './src/renderer/assets', to: './renderer/assets' },
+			{ from: './src/renderer/remoteCtrlServer', to: './renderer/remoteCtrlServer' },
 		])
 	],
 	watch: true // configure webpack to watch for changes.
-};
+}
+
+module.exports = [
+	main,
+	rektPlayer
+];

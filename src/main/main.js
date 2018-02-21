@@ -1,6 +1,9 @@
-const { app, BrowserWindow, globalShortcut } = require('electron');
-const path = require('path');
-const url = require('url');
+const { app,
+        BrowserWindow,
+        globalShortcut,
+        ipcMain } = require('electron');
+const path        = require('path');
+const url         = require('url');
 
 let rektPlayer;
 let remoteCtrlServer;
@@ -13,8 +16,8 @@ function createWindow() {
     });
 
     rektPlayer.loadURL(url.format({
-        pathname: path.join(__dirname, 'app', 'index.html'),
-        protocol: 'file:',
+        pathname: path.join(__dirname, '..', 'renderer', 'app', 'index.html'),
+        protocol: 'file',
         slashes: true
     }));
 
@@ -34,13 +37,18 @@ function createWindow() {
     });
 
     remoteCtrlServer.loadURL(url.format({
-        pathname: path.join(__dirname, 'remoteCtrlServer', 'index.html'),
-        protocol: 'file:',
+        pathname: path.join(__dirname, '..', 'renderer', 'remoteCtrlServer', 'index.html'),
+        protocol: 'file',
         slashes: true
     }));
 
     remoteCtrlServer.webContents.openDevTools();
 }
+
+// setup IPC
+ipcMain.on('remoteGesture', (event, gesture) => {
+    rektPlayer.webContents.send('remoteGesture', gesture);
+});
 
 app.on('ready', createWindow);
 
