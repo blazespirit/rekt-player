@@ -1,5 +1,5 @@
 module.exports = {
-    gesture: {
+    Gesture: {
         SWIPE_UP: 'swipeUp',
         SWIPE_DOWN: 'swipeDown',
         SWIPE_LEFT: 'swipeLeft',

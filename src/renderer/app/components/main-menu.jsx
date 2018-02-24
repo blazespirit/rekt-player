@@ -1,76 +1,133 @@
-import React   from 'react';
-import { css } from 'linaria';
-import Icon    from './icon.jsx';
+import React                   from 'react';
+import PropTypes               from 'prop-types';
+import { Redirect }            from 'react-router-dom';
+import { connect }             from 'react-redux';
+import { css }                 from 'linaria';
+import { ipcRenderer }         from 'electron';
+import { changeMenuFocusIndex,
+         changePage }          from '../redux/actions';
+import { Gesture }             from '../../../config.js';
+import Icon                    from './icon.jsx';
 
-export default class App extends React.Component {
+const mapStateToProps = (state, ownProps) => ({
+    focusIndex: state.mainMenuFocusIndex,
+    currentPage: state.currentPage
+});
+
+class MainMenu extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            highlightIndex: 0
-        };
     }
 
     componentDidMount() {
-        setInterval(() => {
-            this.setState((prevState, props) => {
-                if (prevState.highlightIndex + 1 > 2) {
-                    return {highlightIndex: 0};
-                }
-                return {highlightIndex: prevState.highlightIndex + 1};
-            });
-        }, 2000);
+        let store = this.context.store;
+
+        ipcRenderer.on('gesture', (event, gesture) => {
+            let currentState = store.getState();
+
+            if (currentState.currentPage === 'MAIN_MENU') {
+                let currentIndex = currentState.mainMenuFocusIndex;
+
+                switch (gesture) {
+                    case Gesture.SWIPE_LEFT:
+                        if (currentIndex - 1 < 0) {
+                            store.dispatch(changeMenuFocusIndex(2));
+                        }
+                        else {
+                            store.dispatch(changeMenuFocusIndex(currentIndex - 1));
+                        }
+                        break;
+                    case Gesture.SWIPE_RIGHT:
+                        if (currentIndex + 1 > 2) {
+                            store.dispatch(changeMenuFocusIndex(0));
+                        }
+                        else {
+                            store.dispatch(changeMenuFocusIndex(currentIndex + 1));
+                        }
+                        break;
+                    case Gesture.TAP:
+                        switch (currentIndex) {
+                            case 0: store.dispatch(changePage('MOVIE')); break;
+                            case 1: store.dispatch(changePage('MUSIC')); break;
+                            case 2: store.dispatch(changePage('YOUTUBE')); break;
+                        }
+                        break;
+                }    
+            }
+        });
+    }
+
+    componentWillUnmount() {
+        ipcRenderer.removeAllListeners('gesture');
     }
 
     render() {
-        let iconFocus = {
-            opacity: 1,
-            padding: 0
-        };
-
-        let labelStyle = {
-            opacity: 1,
-            transform: 'translateY(0)'
-        };
-        return (
-            <div className={container}>
-                <div className={menu}>
-                    <div className={flexRow}>
-                        <div className={icon}
-                            style={this.state.highlightIndex === 0 ? iconFocus : {}}>
-                            <Icon type="movie" />
+        if (this.props.currentPage === 'MOVIE') {
+            return <Redirect to='/movie' />
+        }
+        else if (this.props.currentPage === 'MUSIC') {
+            return <Redirect to='/music' />
+        }
+        else if (this.props.currentPage === 'YOUTUBE') {
+            return <Redirect to='/youtube' />
+        }
+        else {
+            let iconFocus = {
+                opacity: 1,
+                padding: 0
+            };
+    
+            let labelStyle = {
+                opacity: 1,
+                transform: 'translateY(0)'
+            };
+            return (
+                <div className={container}>
+                    <div className={menu}>
+                        <div className={flexRow}>
+                            <div className={icon}
+                                style={this.props.focusIndex === 0 ? iconFocus : {}}>
+                                <Icon type="movie" />
+                            </div>
+                            <div className={spacer}></div>
+                            <div className={icon}
+                                style={this.props.focusIndex === 1 ? iconFocus : {}}>
+                                <Icon type="music" />
+                            </div>
+                            <div className={spacer}></div>
+                            <div className={icon}
+                                style={this.props.focusIndex === 2 ? iconFocus : {}}>
+                                <Icon type="youtube" />
+                            </div>
                         </div>
-                        <div className={spacer}></div>
-                        <div className={icon}
-                            style={this.state.highlightIndex === 1 ? iconFocus : {}}>
-                            <Icon type="music" />
+                        <div className={highlightRow}>
+                            <div className={highlight} style={{left: (this.props.focusIndex * 25) + 'vw'}}></div>
                         </div>
-                        <div className={spacer}></div>
-                        <div className={icon}
-                            style={this.state.highlightIndex === 2 ? iconFocus : {}}>
-                            <Icon type="youtube" />
-                        </div>
-                    </div>
-                    <div className={highlightRow}>
-                        <div className={highlight} style={{left: (this.state.highlightIndex * 25) + 'vw'}}></div>
-                    </div>
-                    <div className={flexRow}>
-                        <div className={label}
-                            style={this.state.highlightIndex === 0 ? labelStyle : {}}>Movie
-                        </div>
-                        <div className={spacer}></div>
-                        <div className={label}
-                            style={this.state.highlightIndex === 1 ? labelStyle : {}}>Music
-                        </div>
-                        <div className={spacer}></div>
-                        <div className={label}
-                            style={this.state.highlightIndex === 2 ? labelStyle : {}}>YouTube
+                        <div className={flexRow}>
+                            <div className={label}
+                                style={this.props.focusIndex === 0 ? labelStyle : {}}>Movie
+                            </div>
+                            <div className={spacer}></div>
+                            <div className={label}
+                                style={this.props.focusIndex === 1 ? labelStyle : {}}>Music
+                            </div>
+                            <div className={spacer}></div>
+                            <div className={label}
+                                style={this.props.focusIndex === 2 ? labelStyle : {}}>YouTube
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
 }
+
+MainMenu.contextTypes = {
+    store: PropTypes.object
+};
+
+export default connect(mapStateToProps)(MainMenu);
 
 // styling
 const container = css`

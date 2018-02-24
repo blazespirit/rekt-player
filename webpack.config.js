@@ -15,7 +15,7 @@ const main = {
 	module: {
 		rules: [
 			{
-				test: /\.(js|jsx)/,
+				test: /\.(js)/,
 				use: [
 					{ loader: 'babel-loader' }
 				],
@@ -23,12 +23,8 @@ const main = {
 			}
 		]
 	},
-	plugins: [
-		// delete 'dist' folder on re-build.
-		new CleanWebpackPlugin(['dist/']),
-	],
 	watch: true // configure webpack to watch for changes.
-}
+};
 
 const rektPlayer = {
 	target: 'electron-renderer',
@@ -78,11 +74,15 @@ const rektPlayer = {
 			{ from: './src/renderer/app/index.html', to: './renderer/app' },
 			{ from: './src/renderer/app/style.css', to: './renderer/app' },
 			{ from: './src/renderer/assets', to: './renderer/assets' },
-			{ from: './src/renderer/remoteCtrlServer', to: './renderer/remoteCtrlServer' },
+			{ from: './src/renderer/remoteCtrlServer', to: './renderer/remoteCtrlServer' }
 		])
 	],
 	watch: true // configure webpack to watch for changes.
-}
+};
+
+const remoteCtrlClient = {
+	
+};
 
 module.exports = [
 	main,

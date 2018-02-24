@@ -16,37 +16,37 @@ gesture.get('rotate').set({ enable: false });
 // send trigerred event to v-player.
 gesture.on('swipeleft', (ev) => {
     gestureEl.textContent = "swipe left";
-    socket.emit('action', 'swipeLeft');
+    socket.emit('gesture', 'swipeLeft');
 });
 
 gesture.on('swiperight', (ev) => {
     gestureEl.textContent = "swipe right";
-    socket.emit('action', 'swipeRight');
+    socket.emit('gesture', 'swipeRight');
 });
 
 gesture.on('swipeup', (ev) => {
     gestureEl.textContent = "swipe up";
-    socket.emit('action', 'swipeUp');
+    socket.emit('gesture', 'swipeUp');
 });
 
 gesture.on('swipedown', (ev) => {
     gestureEl.textContent = "swipe down";
-    socket.emit('action', 'swipeDown');
+    socket.emit('gesture', 'swipeDown');
 });
 
 gesture.on('tap', (ev) => {
     gestureEl.textContent = "tap";
-    socket.emit('action', 'tap');
+    socket.emit('gesture', 'tap');
 });
 
 gesture.on('press', (ev) => {
     gestureEl.textContent = "press";
-    socket.emit('action', 'press');
+    socket.emit('gesture', 'press');
 });
 
 gesture.on('pinchend', (ev) => {
     gestureEl.textContent = "pinchEnd";
-    socket.emit('action', 'pinch');
+    socket.emit('gesture', 'pinch');
 });
 
 // Add event listener for shutdown-icon

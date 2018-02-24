@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from 'linaria';
 
-export default class App extends React.Component {
+export default class MoviePage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

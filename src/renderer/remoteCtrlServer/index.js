@@ -10,9 +10,9 @@ const ipcRenderer = require('electron').ipcRenderer;
 io.on('connection', function(socket) {
     console.log('a remote connected!');
 
-    socket.on('action', function(gesture) {
-        console.log(`remote fire ${gesture} action.`);
-        ipcRenderer.send('remoteGesture', gesture);
+    socket.on('gesture', function(gesture) {
+        console.log(`remote fire ${gesture}.`);
+        ipcRenderer.send('gesture', gesture);
     });
 
     socket.on('disconnect', function () {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from 'linaria';
 
-export default class App extends React.Component {
+export default class MusicPage extends React.Component {
     render() {
         return (
             <div className={container}>

@@ -1,16 +1,18 @@
-import React          from 'react';
-import ReactDOM       from 'react-dom';
-import { HashRouter } from 'react-router-dom';
-import RektPlayer     from './components/rekt-player.jsx';
-import { ipcRenderer } from 'electron';
+import React             from 'react';
+import ReactDOM          from 'react-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
+import { createStore }   from 'redux';
+import { Provider }      from 'react-redux';
+import reducer           from './redux/reducers';
+import RektPlayer        from './components/rekt-player.jsx';
 
-ipcRenderer.on('remoteGesture', (event, gesture) => {
-    console.log(gesture + ' @rekt-player');
-});
+const store = createStore(reducer);
 
 ReactDOM.render(
-    <HashRouter>
-        <RektPlayer />
-    </HashRouter>,
+    <Provider store={store}>
+        <HashRouter>
+            <RektPlayer />
+        </HashRouter>
+    </Provider>,
     document.getElementById('app')
 );

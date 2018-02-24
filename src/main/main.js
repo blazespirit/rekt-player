@@ -27,7 +27,9 @@ function createWindow() {
         remoteCtrlServer = null;
     });
 
-    const toogleDev = globalShortcut.register('Ctrl + F12', function () {
+    rektPlayer.webContents.openDevTools();
+
+    globalShortcut.register('Ctrl + F12', function () {
         rektPlayer.webContents.toggleDevTools();
     });
 
@@ -46,8 +48,8 @@ function createWindow() {
 }
 
 // setup IPC
-ipcMain.on('remoteGesture', (event, gesture) => {
-    rektPlayer.webContents.send('remoteGesture', gesture);
+ipcMain.on('gesture', (event, gesture) => {
+    rektPlayer.webContents.send('gesture', gesture);
 });
 
 app.on('ready', createWindow);

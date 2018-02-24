@@ -1,7 +1,7 @@
 import React          from 'react';
 import { css, names } from 'linaria';
 
-export default class App extends React.Component {
+export default class Icon extends React.Component {
     constructor(props) {
         super(props);
     }

@@ -2,7 +2,7 @@ import React from 'react';
 import Clock from './clock.jsx';
 import { css } from 'linaria';
 
-export default class App extends React.Component {
+export default class Header extends React.Component {
     render() {
         return (
             <div className={container}>
